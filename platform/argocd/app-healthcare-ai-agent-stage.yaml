@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: healthcare-ai-agent-stage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/testoranit/healthcare-ai-platform-gitops.git
+    targetRevision: main
+    path: apps/healthcare-ai-agent/overlays/stage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: healthcare-ai-stage
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

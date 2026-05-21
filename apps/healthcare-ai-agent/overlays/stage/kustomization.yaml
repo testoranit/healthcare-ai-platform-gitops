@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: healthcare-ai-stage
 
 resources:
+  - namespace.yaml
   - ../../base
 
 images:

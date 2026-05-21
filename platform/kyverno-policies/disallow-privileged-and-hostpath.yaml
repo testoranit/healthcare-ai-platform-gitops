@@ -1,0 +1,40 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: healthcare-ai-disallow-privileged-and-hostpath
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: disallow-privileged-containers
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  app.kubernetes.io/part-of: healthcare-ai-platform
+      validate:
+        message: "Privileged containers are not allowed for Healthcare AI workloads."
+        pattern:
+          spec:
+            containers:
+              - securityContext:
+                  =(privileged): false
+                  allowPrivilegeEscalation: false
+    - name: disallow-hostpath-volumes
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  app.kubernetes.io/part-of: healthcare-ai-platform
+      validate:
+        message: "hostPath volumes are not allowed for Healthcare AI workloads."
+        pattern:
+          spec:
+            =(volumes):
+              - X(hostPath): "null"

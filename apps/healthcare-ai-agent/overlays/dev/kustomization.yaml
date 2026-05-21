@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: healthcare-ai-dev
 
 resources:
+  - namespace.yaml
   - ../../base
 
 images:

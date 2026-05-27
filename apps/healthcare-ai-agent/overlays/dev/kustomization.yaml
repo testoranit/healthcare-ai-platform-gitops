@@ -10,7 +10,7 @@ resources:
 images:
 - name: healthcare-ai-agent
   newName: 021655150740.dkr.ecr.ap-south-1.amazonaws.com/healthcare-ai-dev-agent
-  newTag: 4422a3a5464a10911ddfd9ca3299a1df737f4c4c
+  newTag: 2be3dd9da9ac7cc2831e689099858b3d2b5e11ae
 
 configMapGenerator:
 - literals:

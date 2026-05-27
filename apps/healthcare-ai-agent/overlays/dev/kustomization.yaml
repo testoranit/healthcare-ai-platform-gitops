@@ -4,35 +4,35 @@ kind: Kustomization
 namespace: healthcare-ai-dev
 
 resources:
-  - namespace.yaml
-  - ../../base
+- namespace.yaml
+- ../../base
 
 images:
-  - name: healthcare-ai-agent
-    newName: 021655150740.dkr.ecr.ap-south-1.amazonaws.com/healthcare-ai-dev-agent
-    newTag: 074102ef5d4d873ea363c8096268037241251108
+- name: healthcare-ai-agent
+  newName: 021655150740.dkr.ecr.ap-south-1.amazonaws.com/healthcare-ai-dev-agent
+  newTag: 4422a3a5464a10911ddfd9ca3299a1df737f4c4c
 
 configMapGenerator:
-  - literals:
-      - APP_MODE=mock
-      - AWS_REGION=ap-south-1
-    name: healthcare-ai-agent-env
+- literals:
+  - APP_MODE=mock
+  - AWS_REGION=ap-south-1
+  name: healthcare-ai-agent-env
 
 patches:
-  - patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/env
-        value:
-          - name: APP_MODE
-            valueFrom:
-              configMapKeyRef:
-                name: healthcare-ai-agent-env
-                key: APP_MODE
-          - name: AWS_REGION
-            valueFrom:
-              configMapKeyRef:
-                name: healthcare-ai-agent-env
-                key: AWS_REGION
-    target:
-      kind: Deployment
-      name: healthcare-ai-agent
+- patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env
+      value:
+        - name: APP_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: healthcare-ai-agent-env
+              key: APP_MODE
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: healthcare-ai-agent-env
+              key: AWS_REGION
+  target:
+    kind: Deployment
+    name: healthcare-ai-agent
